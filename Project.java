@@ -1,29 +1,45 @@
-import java.util.Scanner;
+class Item {
+    private String name;
+    private double price;
 
-class Product {
-    String name;
-    double price;
-    int quantity;
-
-    Product(String name, double price, int quantity) {
+    Item(String name, double price) {
         this.name = name;
         this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
+
+class Product extends Item {
+    private int quantity;
+
+    Product(String name, double price, int quantity) {
+        super(name, price);   // calling parent constructor
         this.quantity = quantity;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     void display() {
-        System.out.println(name + " - Rs." + price + " x " + quantity);
+        System.out.println(getName() + " - Rs." + getPrice() + " x " + quantity);
     }
 }
 
 class Cart {
-    Product[] items = new Product[10];
-    int count = 0;
+    private Product[] items = new Product[10];
+    private int count = 0;
 
     void addProduct(Product p) {
-        items[count] = p;
-        count++;
-        System.out.println(p.name + " added!");
+        items[count++] = p;
+        System.out.println(p.getName() + " added!");
     }
 
     void viewCart() {
@@ -34,17 +50,19 @@ class Cart {
 
     void checkout() {
         double total = 0;
+
         for (int i = 0; i < count; i++) {
-            total += items[i].price * items[i].quantity;
+            total += items[i].getPrice() * items[i].getQuantity();
         }
+
         double discount = total * 0.10;
         double tax = (total - discount) * 0.05;
-        double final_amount = total - discount + tax;
+        double finalAmount = total - discount + tax;
 
         System.out.println("Total: Rs." + total);
         System.out.println("Discount: Rs." + discount);
         System.out.println("Tax: Rs." + tax);
-        System.out.println("Final Amount: Rs." + final_amount);
+        System.out.println("Final Amount: Rs." + finalAmount);
     }
 }
 
@@ -56,10 +74,10 @@ public class Project {
         cart.addProduct(new Product("Shirt", 500, 2));
         cart.addProduct(new Product("Shoes", 1000, 1));
 
-        System.out.println("--- Cart ---");
+        System.out.println("\n--- Cart ---");
         cart.viewCart();
 
-        System.out.println("--- Bill ---");
+        System.out.println("\n--- Bill ---");
         cart.checkout();
     }
 }
