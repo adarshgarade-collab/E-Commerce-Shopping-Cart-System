@@ -1,4 +1,4 @@
-class Item {
+abstract class Item {
     private String name;
     private double price;
 
@@ -14,13 +14,16 @@ class Item {
     public double getPrice() {
         return price;
     }
+
+    // Abstract Method
+    abstract void display();
 }
 
 class Product extends Item {
     private int quantity;
 
     Product(String name, double price, int quantity) {
-        super(name, price);   // calling parent constructor
+        super(name, price);
         this.quantity = quantity;
     }
 
@@ -28,6 +31,7 @@ class Product extends Item {
         return quantity;
     }
 
+    @Override
     void display() {
         System.out.println(getName() + " - Rs." + getPrice() + " x " + quantity);
     }
